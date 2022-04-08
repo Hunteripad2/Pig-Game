@@ -8,6 +8,7 @@ TagManager:
   - TileMap
   - ItemFolder
   - Item
+  - UI
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,7 @@ public class CharController : MonoBehaviour
 {
     [HideInInspector] public Character characterData;
     [HideInInspector] private float timeToMove;
+    [HideInInspector] private UIController UI;
     [HideInInspector] public enum MoveDirection { right, left, up, down }
 
     [Header("Movement")]
@@ -20,6 +21,7 @@ public class CharController : MonoBehaviour
     private void Start()
     {
         characterData.charController = this;
+        UI = GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>();
     }
 
     private void Update()
@@ -92,17 +94,22 @@ public class CharController : MonoBehaviour
     {
         if (characterData.tile.item != null)
         {
-            CollectItem();
+            CollectItem(characterData.tile.item);
         }
     }
 
-    private void CollectItem()
+    private void CollectItem(GameObject item)
     {
-        Destroy(characterData.tile.item);
+        if (item.transform.parent.childCount == 1)
+        {
+            UI.ShowGameOverScreen(true);
+        }
+
+        Destroy(item);
     }
 
     public void Die()
     {
-        this.enabled = false;
+        UI.ShowGameOverScreen(false);
     }
 }

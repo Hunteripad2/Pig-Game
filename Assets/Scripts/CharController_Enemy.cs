@@ -28,7 +28,6 @@ public class CharController_Enemy : CharController
     {
         animator.SetInteger("state", hitDirection);
         animator.SetTrigger("hit");
-        this.enabled = false;
 
         player.charController.Die();
     }

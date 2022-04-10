@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 845958294918283752}
   - component: {fileID: 3072439370458950012}
   - component: {fileID: 8899340693191320705}
-  - component: {fileID: 1472805746137120523}
+  - component: {fileID: -2946578492379137367}
   - component: {fileID: -7215456276912041687}
   - component: {fileID: -1849040168595997499}
   - component: {fileID: 4549646765003094322}
@@ -106,7 +106,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1472805746137120523
+--- !u!114 &-2946578492379137367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,19 +115,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 3772379620749677921}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22e88e09acfb54e44a3bb83de3fd7fa1, type: 3}
+  m_Script: {fileID: 11500000, guid: f252b70984c64eb4dafc418cc0b78a4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10
   tilePull: 0.1
   moveCooldown: 0
   moveSoundEffect: {fileID: -7215456276912041687}
-  collectItemSoundEffect: {fileID: -1849040168595997499}
-  bombPrefab: {fileID: 5010623741160727946, guid: 746cc2780de6f8042b1eb960232c2deb, type: 3}
-  bombedCooldown: 5
-  setBombSoundEffect: {fileID: 4549646765003094322}
   sprite: {fileID: 3072439370458950012}
   animator: {fileID: 8899340693191320705}
+  swipeThreshold: 2.5
+  collectItemSoundEffect: {fileID: -1849040168595997499}
+  bombPrefab: {fileID: 5010623741160727946, guid: 746cc2780de6f8042b1eb960232c2deb, type: 3}
+  setBombSoundEffect: {fileID: 4549646765003094322}
 --- !u!82 &-7215456276912041687
 AudioSource:
   m_ObjectHideFlags: 0

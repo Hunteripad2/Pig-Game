@@ -10,6 +10,8 @@ public class BombController : MonoBehaviour
     [Header("Bomb")]
     [SerializeField] private int explosionDistance = 2;
     [SerializeField] private float explosionTime = 2f;
+    [SerializeField] private AudioSource bombSoundEffect;
+    [SerializeField] private SpriteRenderer sprite;
 
     private void Update()
     {
@@ -25,11 +27,14 @@ public class BombController : MonoBehaviour
 
     private void Explode()
     {
-        bombedTiles = new List<Tile>();
+        bombSoundEffect.Play();
+        sprite.color = Color.red;
 
+        bombedTiles = new List<Tile>();
         BombNeighbours(tile, explosionDistance);
 
-        Destroy(gameObject);
+        Destroy(gameObject, 0.25f);
+        this.enabled = false;
     }
 
     private void BombNeighbours(Tile tile, int remainingDistance)

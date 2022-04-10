@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private AudioSource bgm;
     [SerializeField] private AudioSource victorySound;
+    [SerializeField] private AudioSource gameOverSound;
 
     [Header("Elements")]
     [SerializeField] private GameObject menuBackground;
@@ -42,6 +43,7 @@ public class UIController : MonoBehaviour
             else
             {
                 loseText.SetActive(true);
+                gameOverSound.Play();
             }
         }
     }

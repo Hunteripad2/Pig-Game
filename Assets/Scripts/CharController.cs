@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharController : MonoBehaviour
 {
     [HideInInspector] public Character characterData;
-    [HideInInspector] private float timeToMove;
+    [HideInInspector] protected float timeToMove;
     [HideInInspector] private UIController UI;
     [HideInInspector] public enum MoveDirection { right, left, up, down }
 
@@ -13,6 +13,9 @@ public class CharController : MonoBehaviour
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float tilePull = 0.1f;
     [SerializeField] private float moveCooldown;
+
+    [Header("Bomb")]
+    [SerializeField] private GameObject bombPrefab;
 
     [Header("Animation")]
     [SerializeField] private SpriteRenderer sprite;
@@ -37,13 +40,18 @@ public class CharController : MonoBehaviour
         }
         else if (timeToMove <= 0f)
         {
+            HandleInteraction();
             HandleMoving();
         }
     }
 
     virtual protected void HandleMoving()
     {
-        if (Input.GetButtonDown("Right"))
+        if (Input.GetButtonDown("Jump"))
+        {
+            SetBomb();
+        }
+        else if (Input.GetButtonDown("Right"))
         {
             MoveTo((int)MoveDirection.right);
         }
@@ -59,6 +67,13 @@ public class CharController : MonoBehaviour
         {
             MoveTo((int)MoveDirection.down);
         }
+    }
+
+    private void SetBomb()
+    {
+        GameObject bomb = Instantiate(bombPrefab, characterData.tile.position, Quaternion.identity);
+
+        bomb.GetComponent<BombController>().tile = characterData.tile;
     }
 
     protected void MoveTo(int moveDirection)
@@ -82,7 +97,6 @@ public class CharController : MonoBehaviour
         if (Mathf.Abs(transform.position.x - characterData.tile.position.x) < tilePull && Mathf.Abs(transform.position.y - characterData.tile.position.y) < tilePull)
         {
             transform.position = characterData.tile.position;
-            HandleInteraction();
         }
         else
         {
@@ -106,6 +120,11 @@ public class CharController : MonoBehaviour
         }
 
         Destroy(item);
+    }
+
+    virtual public void GetBombed()
+    {
+        return;
     }
 
     public void Die()

@@ -14,7 +14,6 @@ public class Tile
     readonly public Vector3 position;
     readonly public int layer;
     public bool passable = true;
-    //public TileComponent tileComponent;
     public Tile[] neighbours;
     public Character character;
     public GameObject item;

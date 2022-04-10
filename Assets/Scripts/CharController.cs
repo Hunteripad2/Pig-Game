@@ -13,9 +13,15 @@ public class CharController : MonoBehaviour
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float tilePull = 0.1f;
     [SerializeField] private float moveCooldown;
+    [SerializeField] private AudioSource moveSoundEffect;
+
+    [Header("Items")]
+    [SerializeField] private AudioSource collectItemSoundEffect;
 
     [Header("Bomb")]
     [SerializeField] private GameObject bombPrefab;
+    [SerializeField] protected float bombedCooldown = 5f;
+    [SerializeField] private AudioSource setBombSoundEffect;
 
     [Header("Animation")]
     [SerializeField] private SpriteRenderer sprite;
@@ -74,6 +80,8 @@ public class CharController : MonoBehaviour
         GameObject bomb = Instantiate(bombPrefab, characterData.tile.position, Quaternion.identity);
 
         bomb.GetComponent<BombController>().tile = characterData.tile;
+
+        setBombSoundEffect.Play();
     }
 
     protected void MoveTo(int moveDirection)
@@ -90,6 +98,8 @@ public class CharController : MonoBehaviour
         sprite.sortingOrder = tile.layer;
 
         timeToMove = moveCooldown;
+
+        moveSoundEffect.Play();
     }
 
     private void HandlePosition()
@@ -120,11 +130,13 @@ public class CharController : MonoBehaviour
         }
 
         Destroy(item);
+
+        collectItemSoundEffect.Play();
     }
 
     virtual public void GetBombed()
     {
-        return;
+        Die();
     }
 
     public void Die()

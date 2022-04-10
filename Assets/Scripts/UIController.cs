@@ -7,6 +7,10 @@ public class UIController : MonoBehaviour
     [HideInInspector] private bool menuIsShown;
     [HideInInspector] private bool isVictoryScreen;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioSource bgm;
+    [SerializeField] private AudioSource victorySound;
+
     [Header("Elements")]
     [SerializeField] private GameObject menuBackground;
     [SerializeField] private GameObject winText;
@@ -33,6 +37,7 @@ public class UIController : MonoBehaviour
             if (isVictoryScreen)
             {
                 winText.SetActive(true);
+                victorySound.Play();
             }
             else
             {
@@ -45,5 +50,7 @@ public class UIController : MonoBehaviour
     {
         menuIsShown = true;
         isVictoryScreen = isVictory;
+
+        bgm.Stop();
     }
 }

@@ -36,7 +36,7 @@ public class BombController : MonoBehaviour
     {
         bombedTiles.Add(tile);
 
-        if (tile.character != null && !tile.character.isPlayer)
+        if (tile.character != null)
         {
             tile.character.charController.GetBombed();
         }

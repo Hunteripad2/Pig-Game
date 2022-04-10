@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CharController_Enemy : CharController
 {
-    [Header("Bomb")]
-    [SerializeField] private float bombedCooldown = 5f;
+    [Header("Hit Player")]
+    [SerializeField] private AudioSource hitPlayerSoundEffect;
 
     override protected void HandleMoving()
     {
@@ -34,6 +34,8 @@ public class CharController_Enemy : CharController
         animator.SetTrigger("hit");
 
         player.charController.Die();
+
+        hitPlayerSoundEffect.Play();
     }
 
     override public void GetBombed()

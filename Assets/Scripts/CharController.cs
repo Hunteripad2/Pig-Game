@@ -6,10 +6,13 @@ public class CharController : MonoBehaviour
 {
     [HideInInspector] public Character characterData;
     [HideInInspector] protected float timeToMove;
+    [HideInInspector] private Vector2 touchDownPosition;
+    [HideInInspector] private Vector2 touchUpPosition;
     [HideInInspector] private UIController UI;
     [HideInInspector] public enum MoveDirection { right, left, up, down }
 
     [Header("Movement")]
+    [SerializeField] private float swipeThreshold = 1f;
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float tilePull = 0.1f;
     [SerializeField] private float moveCooldown;
@@ -53,25 +56,58 @@ public class CharController : MonoBehaviour
 
     virtual protected void HandleMoving()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.touches.Length == 0)
+        {
+            return;
+        }
+
+        Touch touch = Input.touches[0];
+
+        if (touch.phase == TouchPhase.Began)
+        {
+            touchDownPosition = touch.position;
+            print(touchDownPosition);
+        }
+        else if (touch.phase == TouchPhase.Ended)
+        {
+            touchUpPosition = touch.position;
+            print(touchUpPosition);
+            HandleTouch();
+        }
+    }
+
+    private void HandleTouch()
+    {
+        float horizontalSwipeDistance = Mathf.Abs(touchDownPosition.x - touchUpPosition.x);
+        float verticalSwipeDistance = Mathf.Abs(touchDownPosition.y - touchUpPosition.y);
+        bool isVerticalSwipe = verticalSwipeDistance > horizontalSwipeDistance;
+        bool isTap = horizontalSwipeDistance < swipeThreshold && verticalSwipeDistance < swipeThreshold;
+
+        if (isTap)
         {
             SetBomb();
         }
-        else if (Input.GetButtonDown("Right"))
+        else if (isVerticalSwipe)
         {
-            MoveTo((int)MoveDirection.right);
+            if (touchUpPosition.y > touchDownPosition.y)
+            {
+                MoveTo((int)MoveDirection.up);
+            }
+            else
+            {
+                MoveTo((int)MoveDirection.down);
+            }
         }
-        else if (Input.GetButtonDown("Left"))
+        else
         {
-            MoveTo((int)MoveDirection.left);
-        }
-        else if (Input.GetButtonDown("Up"))
-        {
-            MoveTo((int)MoveDirection.up);
-        }
-        else if (Input.GetButtonDown("Down"))
-        {
-            MoveTo((int)MoveDirection.down);
+            if (touchUpPosition.x > touchDownPosition.x)
+            {
+                MoveTo((int)MoveDirection.right);
+            }
+            else
+            {
+                MoveTo((int)MoveDirection.left);
+            }
         }
     }
 
